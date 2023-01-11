@@ -1,0 +1,42 @@
+-- create table students (
+--     id int not null auto_increment primary key,
+--     name varchar(50)
+-- );
+
+-- create table papers (
+--     title varchar(10),
+--     grade varchar(1),
+--     student_id int not null,
+--     foreign key(student_id) references students(id) on delete cascade
+-- ); 
+
+-- INSERT INTO students (name) VALUES
+-- ('Caleb'), ('Samantha'), ('Raj'), ('Carlos'), ('Lisa');
+
+-- alter table papers modify column title varchar(50);
+-- alter table papers modify column grade int;
+
+-- INSERT INTO papers (student_id, title, grade ) VALUES
+-- (1, 'My First Book Report', 60),
+-- (1, 'My Second Book Report', 75),
+-- (2, 'Russian Lit Through The Ages', 94),
+-- (2, 'De Montaigne and The Art of The Essay', 98),
+-- (4, 'Borges and Magical Realism', 89);
+
+--  select name as first_name, title, grade from students join papers on papers.student_id = students.id;
+-- select name as first_name, title, grade from students left join papers on papers.student_id = students.id;
+-- select name as first_name, ifnull(title, "missing"), ifnull(grade, 0) from students left join papers on papers.student_id = students.id;
+select 
+name as first_name, 
+avg(ifnull(grade, 0)) as average,
+case 
+when avg(ifnull(grade, 0)) > 75 then "Passing"
+else "Failing"
+end as "Passing Status"
+from students left join papers on 
+papers.student_id = students.id 
+group by first_name;
+
+ 
+
+
